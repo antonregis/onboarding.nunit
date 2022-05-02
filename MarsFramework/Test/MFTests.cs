@@ -3,7 +3,6 @@ using MarsFramework.Global;
 using AventStack.ExtentReports.Reporter;
 using MarsFramework.Config;
 using AventStack.ExtentReports;
-using static MarsFramework.Global.GlobalDefinitions;
 using System;
 
 namespace MarsFramework
@@ -11,12 +10,7 @@ namespace MarsFramework
     [TestFixture]
     class MFTests : Base
     {
-        // Report and Tests for ExtentReports  
-        public static ExtentReports extent;
-        public static ExtentTest test;
-
-
-        [OneTimeSetUp]
+         [OneTimeSetUp]
         public void StartExtentReports()
         {
             // Initialize ExtentReports
@@ -24,6 +18,7 @@ namespace MarsFramework
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
         }
+
 
         [Test]
         public void Test1()
@@ -36,11 +31,6 @@ namespace MarsFramework
                 // Action
                 string actualResult = "dummy";
                 string expectedResult = "dummy";
-
-                // Take a screenshot
-                GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Home/ListingManagement");
-                string img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Screenshot");
-                test.AddScreenCaptureFromPath(img);            
 
                 // Assertion
                 Assert.That(actualResult, Is.EqualTo(expectedResult));
@@ -69,10 +59,8 @@ namespace MarsFramework
                 string actualResult = "doll";
                 string expectedResult = "dummy";
 
-                // Take a screenshot
-                GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Account/Profile");
-                string img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Screenshot");
-                test.AddScreenCaptureFromPath(img);
+                // Does nothing really but just to change screenshot image
+                GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Home/ListingManagement");
 
                 // Assertion
                 Assert.That(actualResult, Is.EqualTo(expectedResult));

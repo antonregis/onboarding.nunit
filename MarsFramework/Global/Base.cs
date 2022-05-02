@@ -1,10 +1,12 @@
-﻿using MarsFramework.Config;
+﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using MarsFramework.Config;
 using MarsFramework.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
-
+using static MarsFramework.Global.GlobalDefinitions;
 
 namespace MarsFramework.Global
 {
@@ -18,6 +20,14 @@ namespace MarsFramework.Global
         public static string ReportPath = MarsResource.ReportPath;
 
         #endregion
+
+        #region Report and Tests for ExtentReports  
+        
+        public static ExtentReports extent;
+        public static ExtentTest test;
+        
+        #endregion
+
 
 
         #region setup and tear down
@@ -54,9 +64,13 @@ namespace MarsFramework.Global
 
         [TearDown]
         public void TearDown()
-        {            
+        {
+            // Take a screenshot          
+            string img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Screenshot");
+            test.AddScreenCaptureFromPath(img);
+
             // Close the driver :)            
-           GlobalDefinitions.driver.Close();
+            GlobalDefinitions.driver.Close();
         }
 
         #endregion
