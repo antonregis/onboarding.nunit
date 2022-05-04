@@ -1,0 +1,18 @@
+Work Example file for Share Skill
+
+ATTEMPT 2:
+Compiled fileupload_x64.au3 (AutoIt script) to an executable file to 
+perform file upload by using this compiled script in the test:
+	Process.Start("G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
+
+ATTEMPT 1:
+This code is not working:
+	AutoItX3 autoIt = new AutoItX3();
+	autoIt.WinActivate("Open");
+	autoIt.Send(@"G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\worksample.txt");
+	autoIt.Send("{ENTER}");
+
+Reference:
+https://www.toolsqa.com/selenium-webdriver/autoit-selenium-webdriver/
+https://www.guru99.com/use-autoit-selenium.html
+https://youtu.be/vmWmCw_8WsE

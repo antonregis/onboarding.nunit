@@ -1,5 +1,4 @@
 ﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
 using MarsFramework.Config;
 using MarsFramework.Pages;
 using NUnit.Framework;
@@ -7,6 +6,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
 using static MarsFramework.Global.GlobalDefinitions;
+
 
 namespace MarsFramework.Global
 {
@@ -69,8 +69,8 @@ namespace MarsFramework.Global
             string img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Screenshot");
             test.AddScreenCaptureFromPath(img);
 
-            // Close the driver :)            
-            GlobalDefinitions.driver.Close();
+            // Quit browser
+            GlobalDefinitions.driver.Quit();
         }
 
         #endregion

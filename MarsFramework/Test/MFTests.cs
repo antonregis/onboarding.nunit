@@ -1,9 +1,11 @@
 using NUnit.Framework;
 using MarsFramework.Global;
+using MarsFramework.Pages;
 using AventStack.ExtentReports.Reporter;
 using MarsFramework.Config;
 using AventStack.ExtentReports;
 using System;
+
 
 namespace MarsFramework
 {
@@ -21,7 +23,7 @@ namespace MarsFramework
 
 
         [Test]
-        public void Test1()
+        public void T01_EnterShareSkill()
         {
             // Create Extentreport test, name extracted from current method name
             test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -29,62 +31,66 @@ namespace MarsFramework
             try
             {
                 // Action
-                string actualResult = "dummy";
-                string expectedResult = "dummy";
+                ShareSkill shareSkillObj = new ShareSkill();
+                shareSkillObj.EnterShareSkill();
 
                 // Assertion
-                Assert.That(actualResult, Is.EqualTo(expectedResult));
+                string enteredCategory = shareSkillObj.GetCategory();
+                string enteredTitle = shareSkillObj.GetTitle();
+                string expectedCategory = GlobalDefinitions.ExcelLib.ReadData(2, "Category");
+                string expectedTitle = GlobalDefinitions.ExcelLib.ReadData(2, "Title");
+                Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
+                Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
 
                 // Log status in Extentreports
-                test.Log(Status.Pass, "Passed, Action successfull");
+                test.Log(Status.Pass, "Passed, action successfull.");
             }
             catch (Exception ex) 
             {
                 // Log status in Extentreports
-                test.Log(Status.Fail, "Failed, Action unsuccessfull");
+                test.Log(Status.Fail, "Failed, action unsuccessfull.");
                 test.Log(Status.Info, ex.Message);
             }
         }
 
+        
 
-        [Test]
-        public void Test2()
-        {
-            // Create Extentreport test, name extracted from current method name
-            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //[Test]
+        //public void Test2()
+        //{
+        //    // Create Extentreport test, name extracted from current method name
+        //    test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            try
-            {
-                // Action
-                string actualResult = "doll";
-                string expectedResult = "dummy";
+        //    try
+        //    {
+        //        // Action
+        //        string actualResult = "doll";
+        //        string expectedResult = "dummy";
 
-                // Does nothing really but just to change screenshot image
-                GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Home/ListingManagement");
+        //        // Does nothing really but just to change screenshot image
+        //        GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Home/ListingManagement");
 
-                // Assertion
-                Assert.That(actualResult, Is.EqualTo(expectedResult));
+        //        // Assertion
+        //        Assert.That(actualResult, Is.EqualTo(expectedResult));
 
-                // Log status in Extentreports
-                test.Log(Status.Pass, "Passed, Action successfull");
-            }
-            catch (Exception ex)
-            {
-                // Log status in Extentreports
-                test.Log(Status.Fail, "Failed, Action unsuccessfull");
-                test.Log(Status.Info, ex.Message);
-            }
-        }
+        //        // Log status in Extentreports
+        //        test.Log(Status.Pass, "Passed, Action successfull");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log status in Extentreports
+        //        test.Log(Status.Fail, "Failed, Action unsuccessfull");
+        //        test.Log(Status.Info, ex.Message);
+        //    }
+        //}
+
 
 
         [OneTimeTearDown]
-        public void SaveExtentReportsAndQuitBrowser()
+        public void SaveExtentReports()
         {
             // Save Extentereport html file
             extent.Flush();
-
-            // Quit browser
-            GlobalDefinitions.driver.Quit();
         }
     }
 }

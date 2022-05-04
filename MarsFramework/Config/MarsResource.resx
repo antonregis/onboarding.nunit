@@ -122,7 +122,7 @@
     <comment>2 for Chrome, 1 for Firefox</comment>
   </data>
   <data name="ExcelPath" xml:space="preserve">
-    <value>G:\onboarding.nunit\MarsFramework\ExcelData\</value>
+    <value>G:\onboarding.nunit\MarsFramework\ExcelData\TestData.xlsx</value>
   </data>
   <data name="IsLogin" xml:space="preserve">
     <value>true</value>

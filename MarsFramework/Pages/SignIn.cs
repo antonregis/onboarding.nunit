@@ -35,7 +35,7 @@ namespace MarsFramework.Pages
         public void LoginSteps()
         {
             // Referencing to an excel file and sheet name
-            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath + "TestData.xlsx", "SignIn");
+            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "SignIn");
 
             // Go to base Url
             GlobalDefinitions.driver.Navigate().GoToUrl(GlobalDefinitions.ExcelLib.ReadData(2, "Url"));
