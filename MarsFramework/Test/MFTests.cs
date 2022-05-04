@@ -12,7 +12,11 @@ namespace MarsFramework
     [TestFixture]
     class MFTests : Base
     {
-         [OneTimeSetUp]
+        // Initializing page objects
+        
+
+
+        [OneTimeSetUp]
         public void StartExtentReports()
         {
             // Initialize ExtentReports
@@ -32,11 +36,12 @@ namespace MarsFramework
             {
                 // Action
                 ShareSkill shareSkillObj = new ShareSkill();
+                ManageListings manageListingsObj = new ManageListings();
                 shareSkillObj.EnterShareSkill();
 
                 // Assertion
-                string enteredCategory = shareSkillObj.GetCategory();
-                string enteredTitle = shareSkillObj.GetTitle();
+                string enteredCategory = manageListingsObj.GetCategory();
+                string enteredTitle = manageListingsObj.GetTitle();
                 string expectedCategory = GlobalDefinitions.ExcelLib.ReadData(2, "Category");
                 string expectedTitle = GlobalDefinitions.ExcelLib.ReadData(2, "Title");
                 Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
@@ -45,7 +50,7 @@ namespace MarsFramework
                 // Log status in Extentreports
                 test.Log(Status.Pass, "Passed, action successfull.");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 // Log status in Extentreports
                 test.Log(Status.Fail, "Failed, action unsuccessfull.");
@@ -53,37 +58,70 @@ namespace MarsFramework
             }
         }
 
-        
 
-        //[Test]
-        //public void Test2()
-        //{
-        //    // Create Extentreport test, name extracted from current method name
-        //    test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-        //    try
-        //    {
-        //        // Action
-        //        string actualResult = "doll";
-        //        string expectedResult = "dummy";
+        [Test]
+        public void T02_EditShareSkill()
+        {
+            // Create Extentreport test, name extracted from current method name
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-        //        // Does nothing really but just to change screenshot image
-        //        GlobalDefinitions.driver.Navigate().GoToUrl("http://localhost:5000/Home/ListingManagement");
+            try
+            {
+                // Action
+                ShareSkill shareSkillObj = new ShareSkill();
+                ManageListings manageListingsObj = new ManageListings();
+                shareSkillObj.EditShareSkill();
 
-        //        // Assertion
-        //        Assert.That(actualResult, Is.EqualTo(expectedResult));
+                // Assertion
+                string enteredCategory = manageListingsObj.GetCategory();
+                string enteredTitle = manageListingsObj.GetTitle();
+                string enteredDescription = manageListingsObj.GetDescription();
+                string expectedCategory = GlobalDefinitions.ExcelLib.ReadData(3, "Category");
+                string expectedTitle = GlobalDefinitions.ExcelLib.ReadData(3, "Title");
+                string expectedDescription = GlobalDefinitions.ExcelLib.ReadData(3, "Description").Substring(0, 30);
+                Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
+                Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
+                Assert.That(enteredDescription.Contains(expectedDescription));
 
-        //        // Log status in Extentreports
-        //        test.Log(Status.Pass, "Passed, Action successfull");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log status in Extentreports
-        //        test.Log(Status.Fail, "Failed, Action unsuccessfull");
-        //        test.Log(Status.Info, ex.Message);
-        //    }
-        //}
+                // Log status in Extentreports
+                test.Log(Status.Pass, "Passed, action successfull");
+            }
+            catch (Exception ex)
+            {
+                // Log status in Extentreports
+                test.Log(Status.Fail, "Failed, action unsuccessfull");
+                test.Log(Status.Info, ex.Message);
+            }
+        }
 
+
+        [Test]
+        public void T03_DeleteShareSkill()
+        {
+            // Create Extentreport test, name extracted from current method name
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            try
+            {
+                // Action                
+                ManageListings manageListingsObj = new ManageListings();
+                manageListingsObj.DeleteShareSkill();
+
+                // Assertion              
+                string statusNotification = manageListingsObj.GetNotification();
+                Assert.That(statusNotification.Contains("has been deleted"));
+
+                // Log status in Extentreports
+                test.Log(Status.Pass, "Passed, action successfull");
+            }
+            catch (Exception ex)
+            {
+                // Log status in Extentreports
+                test.Log(Status.Fail, "Failed, action unsuccessfull");
+                test.Log(Status.Info, ex.Message);
+            }
+        }
 
 
         [OneTimeTearDown]

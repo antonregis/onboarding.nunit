@@ -94,15 +94,13 @@ namespace MarsFramework.Pages
         [FindsBy(How = How.XPath, Using = "//input[@value='Save']")]
         private IWebElement Save { get; set; }
 
-        //Storing the Category
-        [FindsBy(How = How.XPath, Using = "//tbody/tr[1]/td[2]")]
-        private IWebElement categoryManageListing { get; set; }
-
-        //Storing the Title
-        [FindsBy(How = How.XPath, Using = "//tbody/tr[1]/td[3]")]
-        private IWebElement titleManageListing { get; set; }
+        //Click on Manage Listings Link
+        [FindsBy(How = How.LinkText, Using = "Manage Listings")]
+        private IWebElement manageListingsLink { get; set; }      
 
         #endregion
+
+        #region public void EnterShareSkill()
 
         public void EnterShareSkill()
         {
@@ -111,6 +109,7 @@ namespace MarsFramework.Pages
             try
             {
                 ShareSkillButton.Click();
+                Thread.Sleep(1000);
                 Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Title"));
                 Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Description"));
                 CategoryDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Category"));
@@ -138,15 +137,15 @@ namespace MarsFramework.Pages
                 SkillExchange.SendKeys(Keys.Enter);
                 WorkSample.Click();
 
-                //AutoIT is working but through a compiled version of fileupload_x64.au3 (fileupload_x64.exe)
-                //AutoIT script below for some reason does not work if ran from this file but fileupload_x64.exe does the job
-                    //AutoItX3 autoIt = new AutoItX3();
-                    //autoIt.WinActivate("Open");
-                    //autoIt.Send(@"G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\worksample.txt");
-                    //autoIt.Send("{ENTER}")
+                // AutoIT is working but through a compiled version of fileupload_x64.au3 (fileupload_x64.exe)
+                // Source file of fileupload_x64.exe found in \MarsFramework\AutoIT\fileupload_x64.au3
+                // AutoIT script below for some reason does not work if ran from this project but fileupload_x64.exe does the job
+                //      AutoItX3 autoIt = new AutoItX3();
+                //      autoIt.WinActivate("Open");
+                //      autoIt.Send(@"G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\worksample.txt");
+                //      autoIt.Send("{ENTER}")
 
                 // Uploading worksample.txt
-                // Source file in \MarsFramework\AutoIT\fileupload_x64.au3
                 Process.Start(@"G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
 
                 // Wait for the page to load (uploaded file in the work samples listing)
@@ -158,16 +157,10 @@ namespace MarsFramework.Pages
 
                 ActiveOption.Click();
                 Save.Click();
-
-                // Go to Manage Listing
-                GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "SignIn");
-                GlobalDefinitions.driver.Navigate().GoToUrl(GlobalDefinitions.ExcelLib.ReadData(2, "Url")+ "/Home/ListingManagement");
+                manageListingsLink.Click();
 
                 // Wait for Manage listings page to load 
                 Thread.Sleep(2000);
-
-                // Restoring reference to excel sheet ShareSkill for assertion purposes
-                GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
             }
             catch (Exception e) 
             {
@@ -175,15 +168,51 @@ namespace MarsFramework.Pages
             }
         }
 
-        public string GetCategory()
+        #endregion
+
+
+        #region public void EditShareSkill()
+
+        public void EditShareSkill()
         {
-            return categoryManageListing.Text;
+            // Referencing to an excel file and sheet name
+            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
+
+            try
+            {
+                // Goal is to edit: Category, title, description, Service type, Skill trade, Active
+                manageListingsLink.Click();
+
+                // Wait for the page to load
+                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, By.XPath("(//i[@class='outline write icon'])[1]"), 4);
+
+                ManageListings manageLsObj = new ManageListings();
+                manageLsObj.edit.Click();
+
+                // Wait for the page to load
+                Thread.Sleep(1000);
+
+                Title.Clear();
+                Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(3, "Title"));
+                Thread.Sleep(1000);
+                Description.Clear();
+                Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(3, "Description"));
+                Thread.Sleep(1000);
+                CategoryDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(3, "Category"));
+                Thread.Sleep(1000);
+                Save.Click();
+
+                // Wait for Manage listings page to load 
+                Thread.Sleep(4000);
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e);
+            }
         }
 
-        public string GetTitle()
-        {
-            return titleManageListing.Text;
-        }
+        #endregion
+
 
         public static string ExtractTimeInfo(string timeToExtract, string extractWhat)
         {
@@ -203,18 +232,12 @@ namespace MarsFramework.Pages
             {
                 returnValue = timeToExtract.Substring(eTime.Length - 2);
             }
-            else 
+            else
             {
                 returnValue = "00";
             }
 
             return returnValue;
-        }
-
-
-        public void EditShareSkill()
-        {
-            // do nothing yet
         }
     }
 }
