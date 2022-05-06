@@ -31,6 +31,16 @@ namespace MarsFramework.Global
             return (wait.Until(ExpectedConditions.ElementIsVisible(by)));
         }
 
+        public static void WaitForShareSkillPageToLoad()
+        {
+            WaitForElement(driver, By.XPath("//*[@value='Save']"), 10);
+        }
+
+        public static void WaitForManageListingToLoad()
+        {
+            WaitForElement(driver, By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[2]"), 10);
+        }
+
         #endregion
 
 

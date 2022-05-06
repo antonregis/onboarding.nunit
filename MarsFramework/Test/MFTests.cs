@@ -2,25 +2,21 @@ using NUnit.Framework;
 using MarsFramework.Global;
 using MarsFramework.Pages;
 using AventStack.ExtentReports.Reporter;
-using MarsFramework.Config;
 using AventStack.ExtentReports;
 using System;
+using static MarsFramework.Global.GlobalDefinitions;
 
 
 namespace MarsFramework
 {
     [TestFixture]
     class MFTests : Base
-    {
-        // Initializing page objects
-        
-
-
+    {        
         [OneTimeSetUp]
         public void StartExtentReports()
         {
             // Initialize ExtentReports
-            var htmlReporter = new ExtentHtmlReporter(MarsResource.ReportPath);
+            var htmlReporter = new ExtentHtmlReporter(ReportPath);
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
         }
@@ -42,8 +38,8 @@ namespace MarsFramework
                 // Assertion
                 string enteredCategory = manageListingsObj.GetCategory();
                 string enteredTitle = manageListingsObj.GetTitle();
-                string expectedCategory = GlobalDefinitions.ExcelLib.ReadData(2, "Category");
-                string expectedTitle = GlobalDefinitions.ExcelLib.ReadData(2, "Title");
+                string expectedCategory = ExcelLib.ReadData(2, "Category");
+                string expectedTitle = ExcelLib.ReadData(2, "Title");
                 Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
                 Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
 
@@ -57,7 +53,6 @@ namespace MarsFramework
                 test.Log(Status.Info, ex.Message);
             }
         }
-
 
 
         [Test]
@@ -77,9 +72,9 @@ namespace MarsFramework
                 string enteredCategory = manageListingsObj.GetCategory();
                 string enteredTitle = manageListingsObj.GetTitle();
                 string enteredDescription = manageListingsObj.GetDescription();
-                string expectedCategory = GlobalDefinitions.ExcelLib.ReadData(3, "Category");
-                string expectedTitle = GlobalDefinitions.ExcelLib.ReadData(3, "Title");
-                string expectedDescription = GlobalDefinitions.ExcelLib.ReadData(3, "Description").Substring(0, 30);
+                string expectedCategory = ExcelLib.ReadData(3, "Category");
+                string expectedTitle = ExcelLib.ReadData(3, "Title");
+                string expectedDescription = ExcelLib.ReadData(3, "Description").Substring(0, 30);
                 Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
                 Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
                 Assert.That(enteredDescription.Contains(expectedDescription));
@@ -109,8 +104,9 @@ namespace MarsFramework
                 manageListingsObj.DeleteShareSkill();
 
                 // Assertion              
-                string statusNotification = manageListingsObj.GetNotification();
-                Assert.That(statusNotification.Contains("has been deleted"));
+                string resultStatusNotification = manageListingsObj.GetNotification();
+                string expectedStatusNotification = "has been deleted";
+                Assert.That(resultStatusNotification.Contains(expectedStatusNotification));                
 
                 // Log status in Extentreports
                 test.Log(Status.Pass, "Passed, action successfull");

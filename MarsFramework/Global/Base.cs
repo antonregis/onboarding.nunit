@@ -38,15 +38,15 @@ namespace MarsFramework.Global
             switch (Browser)
             {
                 case 1:
-                    GlobalDefinitions.driver = new FirefoxDriver();
+                    driver = new FirefoxDriver();
                     break;
                 case 2:
-                    GlobalDefinitions.driver = new ChromeDriver();
+                    driver = new ChromeDriver();
                     break;
             }
 
             // Maximize browser window
-            GlobalDefinitions.driver.Manage().Window.Maximize();
+            driver.Manage().Window.Maximize();
 
             
             if (MarsResource.IsLogin == "true")
@@ -66,11 +66,11 @@ namespace MarsFramework.Global
         public void TearDown()
         {
             // Take a screenshot          
-            string img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Screenshot");
+            string img = SaveScreenShotClass.SaveScreenshot(driver, "Screenshot");
             test.AddScreenCaptureFromPath(img);
 
             // Quit browser
-            GlobalDefinitions.driver.Quit();
+            driver.Quit();
         }
 
         #endregion

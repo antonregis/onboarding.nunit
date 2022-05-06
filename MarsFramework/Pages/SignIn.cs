@@ -1,6 +1,7 @@
 ﻿using MarsFramework.Global;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using static MarsFramework.Global.GlobalDefinitions;
 
 
 namespace MarsFramework.Pages
@@ -35,25 +36,25 @@ namespace MarsFramework.Pages
         public void LoginSteps()
         {
             // Referencing to an excel file and sheet name
-            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "SignIn");
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "SignIn");
 
             // Go to base Url
-            GlobalDefinitions.driver.Navigate().GoToUrl(GlobalDefinitions.ExcelLib.ReadData(2, "Url"));
+            driver.Navigate().GoToUrl(ExcelLib.ReadData(2, "Url"));
 
             // Click signin button
             SignIntab.Click();
 
             // Picking up excel data from "Username" column, in row 2
-            Email.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Username"));
+            Email.SendKeys(ExcelLib.ReadData(2, "Username"));
 
             // Picking up excel data from "Password" column, in row 2
-            Password.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Password"));
+            Password.SendKeys(ExcelLib.ReadData(2, "Password"));
 
             // Click login button
             LoginBtn.Click();
 
-            // Wait for the page to load successfully
-            GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, By.XPath("//button[contains(text(),'Sign Out')]"), 8);
+            // Wait for profile page to load 
+            WaitForElement(driver, By.XPath("//th[contains(text(),'Language')]"), 10);
         }
     }
 }

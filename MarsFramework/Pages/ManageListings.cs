@@ -1,12 +1,13 @@
-﻿using MarsFramework.Global;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Threading;
+using static MarsFramework.Global.GlobalDefinitions;
+
 
 namespace MarsFramework.Pages
 {
-    internal class ManageListings
+    public class ManageListings
     {
         public ManageListings()
         {
@@ -60,27 +61,23 @@ namespace MarsFramework.Pages
 
         #endregion
 
+
         public void DeleteShareSkill() 
         {
             try
             {
                 manageListingsLink.Click();
-
-                // Wait for the page to load
-                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, By.XPath("(//i[@class='outline write icon'])[1]"), 4);
-
+                WaitForManageListingToLoad();
                 delete.Click();
                 yesButton.Click();
-
-                // Wait for the page to load
                 Thread.Sleep(1000);
+                Console.WriteLine(notification.Text);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }    
         }
-
 
 
         public string GetCategory()
@@ -102,6 +99,5 @@ namespace MarsFramework.Pages
         {
             return notification.Text;
         }
-
     }
 }
