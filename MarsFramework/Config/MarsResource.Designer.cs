@@ -97,15 +97,6 @@ namespace MarsFramework.Config {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to G:\onboarding.nunit\MarsFramework\TestReports\ExtentReports\.
-        /// </summary>
-        internal static string ReportXMLPath {
-            get {
-                return ResourceManager.GetString("ReportXMLPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to G:\onboarding.nunit\MarsFramework\TestReports\Screenshots\.
         /// </summary>
         internal static string ScreenshotPath {

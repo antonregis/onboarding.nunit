@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Threading;
@@ -11,7 +12,7 @@ namespace MarsFramework.Pages
     {
         public ManageListings()
         {
-            PageFactory.InitElements(Global.GlobalDefinitions.driver, this);
+            PageFactory.InitElements(driver, this);
         }
 
 
@@ -75,7 +76,7 @@ namespace MarsFramework.Pages
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Assert.Fail(e.Message);
             }    
         }
 

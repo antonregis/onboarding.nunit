@@ -6,7 +6,7 @@ perform file upload by using this compiled script in the test:
 	Process.Start("G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
 
 ATTEMPT 1:
-This code is not working:
+This code is not working if ran directly from the project:
 	AutoItX3 autoIt = new AutoItX3();
 	autoIt.WinActivate("Open");
 	autoIt.Send(@"G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\worksample.txt");

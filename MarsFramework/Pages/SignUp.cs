@@ -9,7 +9,7 @@ namespace MarsFramework.Pages
     {
         public SignUp()
         {
-            PageFactory.InitElements(Global.GlobalDefinitions.driver, this);
+            PageFactory.InitElements(driver, this);
         }
 
         #region  Initialize Web Elements 

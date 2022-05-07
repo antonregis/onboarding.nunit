@@ -8,7 +8,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 
 namespace MarsFramework.Global
 {
@@ -33,7 +33,7 @@ namespace MarsFramework.Global
 
         public static void WaitForShareSkillPageToLoad()
         {
-            WaitForElement(driver, By.XPath("//*[@value='Save']"), 10);
+            WaitForElement(driver, By.XPath("//*[@name='title']"), 10);
         }
 
         public static void WaitForManageListingToLoad()

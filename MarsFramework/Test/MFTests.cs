@@ -23,20 +23,23 @@ namespace MarsFramework
 
 
         [Test]
-        public void T01_EnterShareSkill()
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public void T01_EnterShareSkill(int testCase)
         {
             // Create Extentreport test, name extracted from current method name
-            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name + "_" + testCase.ToString());            
 
             try
             {
                 // Action
-                ShareSkill shareSkillObj = new ShareSkill();
-                ManageListings manageListingsObj = new ManageListings();
-                shareSkillObj.EnterShareSkill();
+                ShareSkill ShareSkillObj = new ShareSkill();
+                ManageListings ManageListingsObj = new ManageListings();
+                ShareSkillObj.EnterShareSkill(testCase);
 
                 // Assertion
-                string resultStatusNotification = manageListingsObj.GetNotification();
+                string resultStatusNotification = ManageListingsObj.GetNotification();
                 string expectedStatusNotification = "Service Listing Added successfully";
                 Assert.That(resultStatusNotification, Is.EqualTo(expectedStatusNotification));
 
@@ -61,17 +64,17 @@ namespace MarsFramework
             try
             {
                 // Action
-                ShareSkill shareSkillObj = new ShareSkill();
-                ManageListings manageListingsObj = new ManageListings();
-                shareSkillObj.EditShareSkill();
+                ShareSkill ShareSkillObj = new ShareSkill();
+                ManageListings ManageListingsObj = new ManageListings();
+                ShareSkillObj.EditShareSkill();
 
                 // Assertion
-                string enteredCategory = manageListingsObj.GetCategory();
-                string enteredTitle = manageListingsObj.GetTitle();
-                string enteredDescription = manageListingsObj.GetDescription();
-                string expectedCategory = ExcelLib.ReadData(3, "Category");
-                string expectedTitle = ExcelLib.ReadData(3, "Title");
-                string expectedDescription = ExcelLib.ReadData(3, "Description").Substring(0, 30);
+                string enteredCategory = ManageListingsObj.GetCategory();
+                string enteredTitle = ManageListingsObj.GetTitle();
+                string enteredDescription = ManageListingsObj.GetDescription();
+                string expectedCategory = ExcelLib.ReadData(2, "Category");
+                string expectedTitle = ExcelLib.ReadData(2, "Title");
+                string expectedDescription = ExcelLib.ReadData(2, "Description").Substring(0, 30);
                 Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
                 Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
                 Assert.That(enteredDescription.Contains(expectedDescription));
@@ -97,11 +100,11 @@ namespace MarsFramework
             try
             {
                 // Action                
-                ManageListings manageListingsObj = new ManageListings();
-                manageListingsObj.DeleteShareSkill();
+                ManageListings ManageListingsObj = new ManageListings();
+                ManageListingsObj.DeleteShareSkill();
 
                 // Assertion              
-                string resultStatusNotification = manageListingsObj.GetNotification();
+                string resultStatusNotification = ManageListingsObj.GetNotification();
                 string expectedStatusNotification = "has been deleted";
                 Assert.That(resultStatusNotification.Contains(expectedStatusNotification));                
 

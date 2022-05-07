@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 using static MarsFramework.Global.GlobalDefinitions;
-
+using NUnit.Framework;
 
 namespace MarsFramework.Pages
 {
@@ -101,58 +101,42 @@ namespace MarsFramework.Pages
         #endregion
 
 
-        public void EnterShareSkill()
+        public void EnterShareSkill(int testCase)
         {
             // Referencing to an excel file and sheet name
             ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
-            
+            testCase = testCase + 1;
+
             try
             {
                 ShareSkillButton.Click();
                 WaitForShareSkillPageToLoad();
-                Title.SendKeys(ExcelLib.ReadData(2, "Title"));
-                Description.SendKeys(ExcelLib.ReadData(2, "Description"));
-                CategoryDropDown.SendKeys(ExcelLib.ReadData(2, "Category"));
-                SubCategoryDropDown.SendKeys(ExcelLib.ReadData(2, "Subcategory"));
-                Tags.SendKeys(ExcelLib.ReadData(2, "Tags"));
+                Title.SendKeys(ExcelLib.ReadData(testCase, "Title"));
+                Description.SendKeys(ExcelLib.ReadData(testCase, "Description"));
+                CategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Category"));
+                SubCategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Subcategory"));
+                Tags.SendKeys(ExcelLib.ReadData(testCase, "Tags"));
                 Tags.SendKeys(Keys.Enter);
                 ServiceTypeOptions.Click();
                 LocationTypeOption.Click();
-                StartDateDropDown.SendKeys(ExcelLib.ReadData(2, "Start date"));
-                EndDateDropDown.SendKeys(ExcelLib.ReadData(2, "End date"));
+                StartDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "Start date"));
+                EndDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "End date"));
                 Days.Click();
-                PopulateTimeInfo("start", ExcelLib.ReadData(2, "Start time"));
-                PopulateTimeInfo("end", ExcelLib.ReadData(2, "End time"));
+                PopulateTimeInfo("start", ExcelLib.ReadData(testCase, "Start time"));
+                PopulateTimeInfo("end", ExcelLib.ReadData(testCase, "End time"));
                 SkillTradeOption.Click();
-                SkillExchange.SendKeys(ExcelLib.ReadData(2, "Skill-Exchange"));
+                SkillExchange.SendKeys(ExcelLib.ReadData(testCase, "Skill-Exchange"));
                 SkillExchange.SendKeys(Keys.Enter);
                 WorkSample.Click();
-
-                // AutoIT is working but through a compiled version of fileupload_x64.au3 (fileupload_x64.exe)
-                // Source file of fileupload_x64.exe is found in \MarsFramework\AutoIT\fileupload_x64.au3
-                // AutoIT script below for some reason does not work if ran from this project but fileupload_x64.exe does the job
-                //      AutoItX3 autoIt = new AutoItX3();
-                //      autoIt.WinActivate("Open");
-                //      autoIt.Send(@"G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\worksample.txt");
-                //      autoIt.Send("{ENTER}")
-
-                // Uploading worksample.txt
                 Process.Start(@"G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
-
-                // Wait for work samples listing to load
-                WaitForElement(driver, By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/div/i"), 10);
-
-                // Taking a screenshot of Work Sample as reinforcement that AutoIT worked
-                // string img = SaveScreenShotClass.SaveScreenshot(driver, "Worksample");
-                // Base.test.AddScreenCaptureFromPath(img);
-
                 ActiveOption.Click();
+                Thread.Sleep(3000);
                 Save.Click();
                 Thread.Sleep(1000);
             }
             catch (Exception e) 
             {
-                Console.WriteLine(e);
+                Assert.Fail(e.Message);
             }
         }
 
@@ -160,34 +144,31 @@ namespace MarsFramework.Pages
         public void EditShareSkill()
         {
             // Referencing to an excel file and sheet name
-            ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "SSkillEdit");
 
             try
             {             
                 manageListingsLink.Click();
                 WaitForManageListingToLoad();
-                ManageListings manageLsObj = new ManageListings();
-                manageLsObj.edit.Click();
+                ManageListings ManageListngObj = new ManageListings();
+                ManageListngObj.edit.Click();
                 WaitForShareSkillPageToLoad();
                 Title.Clear();
-                Title.SendKeys(ExcelLib.ReadData(3, "Title"));
+                Title.SendKeys(ExcelLib.ReadData(2, "Title"));
                 wait(1);
                 Description.Clear();
-                Description.SendKeys(ExcelLib.ReadData(3, "Description"));
+                Description.SendKeys(ExcelLib.ReadData(2, "Description"));
                 wait(1);
-                CategoryDropDown.SendKeys(ExcelLib.ReadData(3, "Category"));
+                CategoryDropDown.SendKeys(ExcelLib.ReadData(2, "Category"));
                 wait(1);
                 Save.Click();
                 WaitForManageListingToLoad();
             }
             catch (Exception e) 
             {
-                Console.WriteLine(e);
+                Assert.Fail(e.Message);                
             }
         }
-
-
-
 
 
         public void PopulateTimeInfo(string whichTime, string timeToExtract) 
