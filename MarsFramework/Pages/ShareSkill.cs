@@ -143,15 +143,12 @@ namespace MarsFramework.Pages
                 WaitForElement(driver, By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/div/i"), 10);
 
                 // Taking a screenshot of Work Sample as reinforcement that AutoIT worked
-                string img = SaveScreenShotClass.SaveScreenshot(driver, "Worksample");
-                Base.test.AddScreenCaptureFromPath(img);
+                // string img = SaveScreenShotClass.SaveScreenshot(driver, "Worksample");
+                // Base.test.AddScreenCaptureFromPath(img);
 
                 ActiveOption.Click();
                 Save.Click();
-                manageListingsLink.Click();
-
-                // Wait for Manage listings page to load 
-                wait(2);
+                Thread.Sleep(1000);
             }
             catch (Exception e) 
             {

@@ -36,12 +36,9 @@ namespace MarsFramework
                 shareSkillObj.EnterShareSkill();
 
                 // Assertion
-                string enteredCategory = manageListingsObj.GetCategory();
-                string enteredTitle = manageListingsObj.GetTitle();
-                string expectedCategory = ExcelLib.ReadData(2, "Category");
-                string expectedTitle = ExcelLib.ReadData(2, "Title");
-                Assert.That(enteredCategory, Is.EqualTo(expectedCategory));
-                Assert.That(enteredTitle, Is.EqualTo(expectedTitle));
+                string resultStatusNotification = manageListingsObj.GetNotification();
+                string expectedStatusNotification = "Service Listing Added successfully";
+                Assert.That(resultStatusNotification, Is.EqualTo(expectedStatusNotification));
 
                 // Log status in Extentreports
                 test.Log(Status.Pass, "Passed, action successfull.");
