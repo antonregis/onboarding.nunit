@@ -79,6 +79,15 @@ namespace MarsFramework.Config {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to G:\onboarding.nunit\MarsFramework\AutoIT\Fileupload\.
+        /// </summary>
+        internal static string FileUploadPath {
+            get {
+                return ResourceManager.GetString("FileUploadPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to true.
         /// </summary>
         internal static string IsLogin {

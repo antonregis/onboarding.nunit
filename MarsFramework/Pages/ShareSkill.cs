@@ -6,6 +6,8 @@ using System.Threading;
 using System.Diagnostics;
 using static MarsFramework.Global.GlobalDefinitions;
 using NUnit.Framework;
+using AutoItX3Lib;
+
 
 namespace MarsFramework.Pages
 {
@@ -42,9 +44,13 @@ namespace MarsFramework.Pages
         [FindsBy(How = How.XPath, Using = "//body/div/div/div[@id='service-listing-section']/div[contains(@class,'ui container')]/div[contains(@class,'listing')]/form[contains(@class,'ui form')]/div[contains(@class,'tooltip-target ui grid')]/div[contains(@class,'twelve wide column')]/div[contains(@class,'')]/div[contains(@class,'ReactTags__tags')]/div[contains(@class,'ReactTags__selected')]/div[contains(@class,'ReactTags__tagInput')]/input[1]")]
         private IWebElement Tags { get; set; }
 
-        //Select the Service type
+        //Select the Service type: Hourly basis
         [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[1]/div")]
-        private IWebElement ServiceTypeOptions { get; set; }
+        private IWebElement ServiceTypeHourlyBasis { get; set; }
+
+        //Select the Service type: One-off
+        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[2]/div/input")]
+        private IWebElement ServiceTypeOneOff { get; set; }
 
         //Select the Location Type
         [FindsBy(How = How.XPath, Using = "//form/div[6]/div[@class='twelve wide column']/div/div[@class = 'field']")]
@@ -117,7 +123,7 @@ namespace MarsFramework.Pages
                 SubCategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Subcategory"));
                 Tags.SendKeys(ExcelLib.ReadData(testCase, "Tags"));
                 Tags.SendKeys(Keys.Enter);
-                ServiceTypeOptions.Click();
+                ServiceTypeOption(ExcelLib.ReadData(testCase, "Service Type"));                
                 LocationTypeOption.Click();
                 StartDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "Start date"));
                 EndDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "End date"));
@@ -128,11 +134,21 @@ namespace MarsFramework.Pages
                 SkillExchange.SendKeys(ExcelLib.ReadData(testCase, "Skill-Exchange"));
                 SkillExchange.SendKeys(Keys.Enter);
                 WorkSample.Click();
-                Process.Start(@"G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
-                ActiveOption.Click();
-                Thread.Sleep(4000);
-                Save.Click();
                 Thread.Sleep(1000);
+                
+                AutoItX3 autoIt = new AutoItX3();
+                string workSampleFile = (ExcelLib.ReadData(testCase, "Work Samples"));    
+                autoIt.WinActivate("Open");
+                Thread.Sleep(1000);
+                autoIt.Send(Base.FileUploadPath + workSampleFile);
+                Thread.Sleep(2000);
+                autoIt.Send("{ENTER}");
+                Thread.Sleep(1000);
+
+                ActiveOption.Click();
+                Thread.Sleep(5000);
+                Save.Click();
+                Thread.Sleep(500);
             }
             catch (Exception e) 
             {
@@ -170,6 +186,18 @@ namespace MarsFramework.Pages
             }
         }
 
+
+        public void ServiceTypeOption(string type)
+        {
+            if (type == "Hourly basis service")
+            {
+                ServiceTypeHourlyBasis.Click();
+            }
+            else if (type == "One-off service") 
+            {
+                ServiceTypeOneOff.Click();
+            }
+        }
 
         public void PopulateTimeInfo(string whichTime, string timeToExtract) 
         {

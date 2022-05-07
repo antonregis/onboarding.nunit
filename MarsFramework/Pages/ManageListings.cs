@@ -72,7 +72,6 @@ namespace MarsFramework.Pages
                 delete.Click();
                 yesButton.Click();
                 Thread.Sleep(1000);
-                Console.WriteLine(notification.Text);
             }
             catch (Exception e)
             {

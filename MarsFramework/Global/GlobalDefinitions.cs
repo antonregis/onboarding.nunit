@@ -10,12 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
+
 namespace MarsFramework.Global
 {
     class GlobalDefinitions
     {
         //Initialise the browser
         public static IWebDriver driver { get; set; }
+
 
         #region WaitforElement 
 
@@ -38,6 +40,7 @@ namespace MarsFramework.Global
             Thread.Sleep(1000);
         }
 
+
         public static void WaitForManageListingToLoad()
         {
             WaitForElement(driver, By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[2]"), 10);
@@ -58,12 +61,10 @@ namespace MarsFramework.Global
                 public string colValue { get; set; }
             }
 
-
             public static void ClearData()
             {
                 dataCol.Clear();
             }
-
 
             private static DataTable ExcelToDataTable(string fileName, string sheetName)
             {
@@ -92,7 +93,6 @@ namespace MarsFramework.Global
                 }
             }
 
-
             public static string ReadData(int rowNumber, string columnName)
             {
                 try
@@ -116,7 +116,6 @@ namespace MarsFramework.Global
                 }
             }
 
-
             public static void PopulateInCollection(string fileName, string SheetName)
             {
                 ExcelLib.ClearData();
@@ -136,10 +135,8 @@ namespace MarsFramework.Global
 
                         //Add all the details for each row
                         dataCol.Add(dtTable);
-
                     }
                 }
-
             }
         }
 
@@ -168,7 +165,7 @@ namespace MarsFramework.Global
                 return fileName.ToString();
             }
         }
-
+		
         #endregion
     }
 }
