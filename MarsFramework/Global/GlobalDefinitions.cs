@@ -34,6 +34,8 @@ namespace MarsFramework.Global
         public static void WaitForShareSkillPageToLoad()
         {
             WaitForElement(driver, By.XPath("//*[@name='title']"), 10);
+            // Adding time for unexpected time delay
+            Thread.Sleep(1000);
         }
 
         public static void WaitForManageListingToLoad()

@@ -130,7 +130,7 @@ namespace MarsFramework.Pages
                 WorkSample.Click();
                 Process.Start(@"G:\onboarding.nunit\MarsFramework\AutoIt\fileupload_x64.exe");
                 ActiveOption.Click();
-                Thread.Sleep(3000);
+                Thread.Sleep(4000);
                 Save.Click();
                 Thread.Sleep(1000);
             }
