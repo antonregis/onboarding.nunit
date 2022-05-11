@@ -102,7 +102,19 @@ namespace MarsFramework.Pages
 
         //Click on Manage Listings Link
         [FindsBy(How = How.LinkText, Using = "Manage Listings")]
-        private IWebElement manageListingsLink { get; set; }      
+        private IWebElement manageListingsLink { get; set; }
+
+        //Storing the 'Title is required' Notification
+        [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Title is required')]")]
+        private IWebElement titleIsRequiredNotification { get; set; }
+
+        //Storing the 'Subcategory is required' Notification
+        [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Subcategory is required')]")]
+        private IWebElement subcategoryIsRequiredNotification { get; set; }
+
+        //Storing the 'Invalid file type' Notification
+        [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Max file size is 2 MB and supported file types are')]")]
+        private IWebElement invalidFileTypeNotification { get; set; }
 
         #endregion
 
@@ -186,6 +198,154 @@ namespace MarsFramework.Pages
             }
         }
 
+        public void EnterShareSkill_TitleIsRequired(int testCase)
+        {
+            // Referencing to an excel file and sheet name
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
+            testCase = testCase + 1;
+
+            try
+            {
+                ShareSkillButton.Click();
+                WaitForShareSkillPageToLoad();
+                // Title.SendKeys(ExcelLib.ReadData(testCase, "Title"));
+                Description.SendKeys(ExcelLib.ReadData(testCase, "Description"));
+                CategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Category"));
+                SubCategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Subcategory"));
+                Tags.SendKeys(ExcelLib.ReadData(testCase, "Tags"));
+                Tags.SendKeys(Keys.Enter);
+                ServiceTypeOption(ExcelLib.ReadData(testCase, "Service Type"));
+                LocationTypeOption.Click();
+                StartDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "Start date"));
+                EndDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "End date"));
+                Days.Click();
+                PopulateTimeInfo("start", ExcelLib.ReadData(testCase, "Start time"));
+                PopulateTimeInfo("end", ExcelLib.ReadData(testCase, "End time"));
+                SkillTradeOption.Click();
+                SkillExchange.SendKeys(ExcelLib.ReadData(testCase, "Skill-Exchange"));
+                SkillExchange.SendKeys(Keys.Enter);
+                WorkSample.Click();
+                Thread.Sleep(1000);
+
+                AutoItX3 autoIt = new AutoItX3();
+                string workSampleFile = (ExcelLib.ReadData(testCase, "Work Samples"));
+                autoIt.WinActivate("Open");
+                Thread.Sleep(1000);
+                autoIt.Send(Base.FileUploadPath + workSampleFile);
+                Thread.Sleep(2000);
+                autoIt.Send("{ENTER}");
+                Thread.Sleep(1000);
+
+                ActiveOption.Click();
+                Thread.Sleep(5000);
+                Save.Click();
+                Thread.Sleep(500);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        public void EnterShareSkill_SubcategoryIsRequired(int testCase)
+        {
+            // Referencing to an excel file and sheet name
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
+            testCase = testCase + 1;
+
+            try
+            {
+                ShareSkillButton.Click();
+                WaitForShareSkillPageToLoad();
+                Title.SendKeys(ExcelLib.ReadData(testCase, "Title"));
+                Description.SendKeys(ExcelLib.ReadData(testCase, "Description"));
+                CategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Category"));
+                // SubCategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Subcategory"));
+                Tags.SendKeys(ExcelLib.ReadData(testCase, "Tags"));
+                Tags.SendKeys(Keys.Enter);
+                ServiceTypeOption(ExcelLib.ReadData(testCase, "Service Type"));
+                LocationTypeOption.Click();
+                StartDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "Start date"));
+                EndDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "End date"));
+                Days.Click();
+                PopulateTimeInfo("start", ExcelLib.ReadData(testCase, "Start time"));
+                PopulateTimeInfo("end", ExcelLib.ReadData(testCase, "End time"));
+                SkillTradeOption.Click();
+                SkillExchange.SendKeys(ExcelLib.ReadData(testCase, "Skill-Exchange"));
+                SkillExchange.SendKeys(Keys.Enter);
+                WorkSample.Click();
+                Thread.Sleep(1000);
+
+                AutoItX3 autoIt = new AutoItX3();
+                string workSampleFile = (ExcelLib.ReadData(testCase, "Work Samples"));
+                autoIt.WinActivate("Open");
+                Thread.Sleep(1000);
+                autoIt.Send(Base.FileUploadPath + workSampleFile);
+                Thread.Sleep(2000);
+                autoIt.Send("{ENTER}");
+                Thread.Sleep(1000);
+
+                ActiveOption.Click();
+                Thread.Sleep(5000);
+                Save.Click();
+                Thread.Sleep(500);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        public void EnterShareSkill_FileuploadInvalidFileType(int testCase)
+        {
+            // Referencing to an excel file and sheet name
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
+            testCase = testCase + 1;
+
+            try
+            {
+                ShareSkillButton.Click();
+                WaitForShareSkillPageToLoad();
+                Title.SendKeys(ExcelLib.ReadData(testCase, "Title"));
+                Description.SendKeys(ExcelLib.ReadData(testCase, "Description"));
+                CategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Category"));
+                SubCategoryDropDown.SendKeys(ExcelLib.ReadData(testCase, "Subcategory"));
+                Tags.SendKeys(ExcelLib.ReadData(testCase, "Tags"));
+                Tags.SendKeys(Keys.Enter);
+                ServiceTypeOption(ExcelLib.ReadData(testCase, "Service Type"));
+                LocationTypeOption.Click();
+                StartDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "Start date"));
+                EndDateDropDown.SendKeys(ExcelLib.ReadData(testCase, "End date"));
+                Days.Click();
+                PopulateTimeInfo("start", ExcelLib.ReadData(testCase, "Start time"));
+                PopulateTimeInfo("end", ExcelLib.ReadData(testCase, "End time"));
+                SkillTradeOption.Click();
+                SkillExchange.SendKeys(ExcelLib.ReadData(testCase, "Skill-Exchange"));
+                SkillExchange.SendKeys(Keys.Enter);
+                WorkSample.Click();
+                Thread.Sleep(1000);
+
+                AutoItX3 autoIt = new AutoItX3();
+                string workSampleFile = (ExcelLib.ReadData(testCase, "Work Samples"));
+                autoIt.WinActivate("Open");
+                Thread.Sleep(1000);
+                autoIt.Send(Base.FileUploadPath + workSampleFile);
+                Thread.Sleep(2000);
+                autoIt.Send("{ENTER}");
+                Thread.Sleep(1000);
+
+                ActiveOption.Click();
+                Thread.Sleep(3000);
+                Save.Click();
+                // Thread.Sleep(500);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+
 
         public void ServiceTypeOption(string type)
         {
@@ -229,6 +389,22 @@ namespace MarsFramework.Pages
                 // am/pm
                 EndTimeDropDown.SendKeys(timeToExtract.Substring(eTime.Length - 2));
             }
+        }
+
+
+        public string GetTitleIsRequiredNotification()
+        {
+            return titleIsRequiredNotification.Text;
+        }
+
+        public string GetSubcategoryIsRequiredNotification()
+        {
+            return subcategoryIsRequiredNotification.Text;
+        }
+
+        public string GetInvalidFileTypeNotification()
+        {
+            return invalidFileTypeNotification.Text;
         }
     }
 }

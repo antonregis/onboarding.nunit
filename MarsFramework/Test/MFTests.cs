@@ -118,7 +118,98 @@ namespace MarsFramework
                 test.Log(Status.Info, ex.Message);
             }
         }
-    
+
+
+        [Test]
+        public void T04_NegativeTest_EnterShareSkill_TitleIsRequired()
+        {
+            // Create Extentreport test, name extracted from current method name
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            int excelTestData = 4; 
+
+            try
+            {
+                // Action
+                ShareSkill ShareSkillObj = new ShareSkill();
+                ShareSkillObj.EnterShareSkill_TitleIsRequired(excelTestData);
+
+                // Assertion
+                string resultStatusNotification = ShareSkillObj.GetTitleIsRequiredNotification();
+                string expectedStatusNotification = "Title is required";
+                Assert.That(resultStatusNotification, Is.EqualTo(expectedStatusNotification));
+
+                // Log status in Extentreports
+                test.Log(Status.Pass, "Passed, action successfull.");
+            }
+            catch (Exception ex)
+            {
+                // Log status in Extentreports
+                test.Log(Status.Fail, "Failed, action unsuccessfull.");
+                test.Log(Status.Info, ex.Message);
+            }
+        }
+
+
+        [Test]
+        public void T05_NegativeTest_EnterShareSkill_SubcategoryIsRequired()
+        {
+            // Create Extentreport test, name extracted from current method name
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            int excelTestData = 5;
+
+            try
+            {
+                // Action
+                ShareSkill ShareSkillObj = new ShareSkill();                
+                ShareSkillObj.EnterShareSkill_SubcategoryIsRequired(excelTestData);
+
+                // Assertion
+                string resultStatusNotification = ShareSkillObj.GetSubcategoryIsRequiredNotification();
+                string expectedStatusNotification = "Subcategory is required";
+                Assert.That(resultStatusNotification, Is.EqualTo(expectedStatusNotification));
+
+                // Log status in Extentreports
+                test.Log(Status.Pass, "Passed, action successfull.");
+            }
+            catch (Exception ex)
+            {
+                // Log status in Extentreports
+                test.Log(Status.Fail, "Failed, action unsuccessfull.");
+                test.Log(Status.Info, ex.Message);
+            }
+        }
+
+
+        [Test]
+        public void T06_NegativeTest_EnterShareSkill_FileuploadInvalidFileType()
+        {
+            // Create Extentreport test, name extracted from current method name
+            test = extent.CreateTest(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            int excelTestData = 6;
+
+            try
+            {
+                // Action
+                ShareSkill ShareSkillObj = new ShareSkill();                
+                ShareSkillObj.EnterShareSkill_FileuploadInvalidFileType(excelTestData);
+
+                // Assertion
+                string resultStatusNotification = ShareSkillObj.GetInvalidFileTypeNotification();                
+                string expectedStatusNotification = "Max file size is 2 MB and supported file types are gif / jpeg / png / jpg / doc(x) / pdf / txt / xls(x)";
+                Assert.That(resultStatusNotification, Is.EqualTo(expectedStatusNotification));
+
+                // Log status in Extentreports
+                test.Log(Status.Pass, "Passed, action successfull.");
+            }
+            catch (Exception ex)
+            {
+                // Log status in Extentreports
+                test.Log(Status.Fail, "Failed, action unsuccessfull.");
+                test.Log(Status.Info, ex.Message);
+            }
+        }
+
+
 
         [OneTimeTearDown]
         public void SaveExtentReports()
